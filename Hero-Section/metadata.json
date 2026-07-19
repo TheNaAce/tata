@@ -1,0 +1,6 @@
+{
+  "name": "Aircraft Maintenance Hero Section",
+  "description": "A premium AI-powered aircraft maintenance landing page hero section with an immersive background video.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
