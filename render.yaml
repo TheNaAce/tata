@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: aeroguard-ai-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r ml_backend/requirements.txt
+    startCommand: uvicorn ml_backend.app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
