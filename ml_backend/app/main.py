@@ -15,17 +15,29 @@ DEFAULT_ARTIFACT_PATH = (
     Path(__file__).resolve().parents[1] / "artifacts" / "rul_xgb_pipeline.joblib"
 )
 
+DEFAULT_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+    "https://tata-seven-beta.vercel.app",
+]
+
+
+def get_allowed_origins() -> list[str]:
+    configured = os.getenv("AEROGUARD_ALLOWED_ORIGINS")
+    if not configured:
+        return DEFAULT_ALLOWED_ORIGINS
+    return [origin.strip() for origin in configured.split(",") if origin.strip()]
+
+
 app = FastAPI(title="AeroGuard AI RUL Prediction API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://127.0.0.1:3000",
-        "http://localhost:3000",
-        "http://127.0.0.1:5173",
-        "http://localhost:5173",
-    ],
-    allow_credentials=True,
+    allow_origins=get_allowed_origins(),
+    allow_origin_regex=r"https://.*\.vercel\.app",
+    allow_credentials=False,
     allow_methods=["POST", "GET"],
     allow_headers=["*"],
 )
